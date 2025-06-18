@@ -1,0 +1,22 @@
+import { OrdersList } from "../components/Order/listOreders";
+import * as React from "react";
+import SiteHeader from "@/components/header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+function Orders() {
+  return (
+    <div className="[--header-height:calc(theme(spacing.14))]">
+      <SidebarProvider className="flex flex-col">
+        <SiteHeader />
+        <div className="flex flex-1">
+          <SidebarInset>
+            <div className="flex flex-1 flex-col gap-4 p-4">
+              <OrdersList />
+            </div>
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
+    </div>
+  );
+}
+
+export default Orders;
