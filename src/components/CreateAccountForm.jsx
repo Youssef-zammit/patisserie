@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState } from "react"; 
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "./context/AuthContext";
 
 const CreateAccountForm = ({ isAdmin }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const CreateAccountForm = ({ isAdmin }) => {
     confirmPassword: "",
     role: "cashier", // default if shown
   });
+    const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +77,7 @@ const CreateAccountForm = ({ isAdmin }) => {
       )}
 
       <div>
-        <label className="block mb-1">Mot de passe</label>
+        <label className="block mb-1">password</label>
         <input
           type="password"
           name="password"
@@ -85,7 +89,7 @@ const CreateAccountForm = ({ isAdmin }) => {
       </div>
 
       <div>
-        <label className="block mb-1">Confirmer le mot de passe</label>
+        <label className="block mb-1">Confirm your password</label>
         <input
           type="password"
           name="confirmPassword"
@@ -100,9 +104,18 @@ const CreateAccountForm = ({ isAdmin }) => {
         type="submit"
         className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700"
       >
-        Créer le compte
+        create account
       </button>
-    </form>
+    
+    <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            already have an account ?{" "}
+            <a href="/signin" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+              Se connecter
+            </a>
+          </p>
+        </div>
+        </form>
   );
 };
 

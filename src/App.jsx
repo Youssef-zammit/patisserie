@@ -2,7 +2,8 @@ import Page from "./pages/page";
 import AboutUs from "./pages/AboutUs";
 import Orders from "./pages/Orders";
 import CollectionPage from "./pages/Offers";
-import CreateAccountForm from "./components/CreateAccountForm";
+import CreateAccountForm from "./components/CreateAccountForm"; 
+import Signin from "./components/signin";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,7 +12,8 @@ import {
 } from "react-router-dom";
 // This is new
 function App() {
-  return (
+  return ( 
+    
     <Router>
       <Routes>
         <Route path="/" element={<Page />} />
@@ -21,6 +23,6 @@ function App() {
         <Route path="/createaccount" element={<CreateAccountForm />} />
       </Routes>
     </Router>
-  );
+  )
 }
 export default App;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, User, Moon, Sun } from "lucide-react"; // added Moon and Sun icons
+import { ShoppingCart, User, Moon, Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navLinks = [
@@ -9,21 +9,10 @@ const navLinks = [
   { label: "Offers", href: "/offers" },
   { label: "Orders", href: "/orders" },
   { label: "AboutUs", href: "/aboutus" },
-  { label: "create account", href: "/createaccount" },
 ];
-
-const [isAdmin, setIsAdmin] = useState(true);
-
-// Set admin for testing 
-useEffect(() => {
-  // Here you'd normally check user role from Supabase/session
-  const role = localStorage.getItem("post"); // e.g., 'admin' or 'cashier'
-  setIsAdmin(post === "admin");
-}, []);
 
 function SiteHeader() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Initialize from localStorage or system preference
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
       if (saved === "dark") return true;
@@ -32,6 +21,13 @@ function SiteHeader() {
     }
     return false;
   });
+
+  const [isAdmin, setIsAdmin] = useState(false); // ✅ inside component
+
+  useEffect(() => {
+    const role = localStorage.getItem("post"); // should be 'admin' if admin
+    setIsAdmin(role === "admin");
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -74,7 +70,7 @@ function SiteHeader() {
 
         {/* Actions */}
         <div className="flex items-center gap-4">
-          {/* Dark Mode Toggle Button */}
+          {/* Dark Mode Toggle */}
           <Button
             variant="ghost"
             size="icon"
@@ -89,13 +85,10 @@ function SiteHeader() {
             )}
           </Button>
 
-          {/* Cart Icon with Badge */}
+          {/* Cart */}
           <Button variant="ghost" size="icon" className="relative">
             <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-gray-300" />
-            <Badge
-              className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full"
-              variant="secondary"
-            >
+            <Badge className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs px-1.5 py-0.5 rounded-full">
               5
             </Badge>
           </Button>
@@ -110,9 +103,15 @@ function SiteHeader() {
           <Button className="bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-md px-4 py-2 shadow">
             Sign Up
           </Button>
-              
-            
 
+          {/* Admin-only: Create Account */}
+          {isAdmin && (
+            <Link to="/createaccount">
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md px-4 py-2 shadow">
+                Create Account
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
